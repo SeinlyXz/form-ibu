@@ -54,14 +54,18 @@
 	});
 </script>
 
-<div class="rekap-container">
-	<div class="rekap-header">
-		<h2>Rekapitulasi Data Kuis</h2>
-		<button class="btn-download" onclick={onDownloadCSV}>
+<div class="mx-auto max-w-7xl px-4">
+	<!-- Header -->
+	<div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+		<h2 class="text-2xl font-semibold text-gray-900">Rekapitulasi Data Kuis</h2>
+		<button
+			onclick={onDownloadCSV}
+			class="flex items-center gap-2 rounded-md bg-gray-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
-				width="20"
-				height="20"
+				width="18"
+				height="18"
 				viewBox="0 0 24 24"
 				fill="none"
 				stroke="currentColor"
@@ -77,303 +81,161 @@
 		</button>
 	</div>
 
-	<div class="stats-grid">
-		<div class="stat-card">
-			<div class="stat-icon">📊</div>
-			<div class="stat-content">
-				<p class="stat-label">Total Peserta</p>
-				<p class="stat-value">{stats.total}</p>
+	<!-- Stats Grid -->
+	<div class="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
+		<div class="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4">
+			<div
+				class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-2xl"
+			>
+				📊
+			</div>
+			<div class="min-w-0">
+				<p class="text-xs font-medium tracking-wide text-gray-500 uppercase">Total Peserta</p>
+				<p class="mt-0.5 text-2xl font-semibold text-gray-900">{stats.total}</p>
 			</div>
 		</div>
-		<div class="stat-card">
-			<div class="stat-icon">💡</div>
-			<div class="stat-content">
-				<p class="stat-label">Inovator</p>
-				<p class="stat-value">{stats.resultCounts.inovator}</p>
+		<div class="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4">
+			<div
+				class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-2xl"
+			>
+				💡
+			</div>
+			<div class="min-w-0">
+				<p class="text-xs font-medium tracking-wide text-gray-500 uppercase">Inovator</p>
+				<p class="mt-0.5 text-2xl font-semibold text-gray-900">{stats.resultCounts.inovator}</p>
 			</div>
 		</div>
-		<div class="stat-card">
-			<div class="stat-icon">🎨</div>
-			<div class="stat-content">
-				<p class="stat-label">Kreator</p>
-				<p class="stat-value">{stats.resultCounts.kreator}</p>
+		<div class="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4">
+			<div
+				class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-2xl"
+			>
+				🎨
+			</div>
+			<div class="min-w-0">
+				<p class="text-xs font-medium tracking-wide text-gray-500 uppercase">Kreator</p>
+				<p class="mt-0.5 text-2xl font-semibold text-gray-900">{stats.resultCounts.kreator}</p>
 			</div>
 		</div>
-		<div class="stat-card">
-			<div class="stat-icon">📚</div>
-			<div class="stat-content">
-				<p class="stat-label">Pendidik</p>
-				<p class="stat-value">{stats.resultCounts.pendidik}</p>
+		<div class="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4">
+			<div
+				class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-2xl"
+			>
+				📚
+			</div>
+			<div class="min-w-0">
+				<p class="text-xs font-medium tracking-wide text-gray-500 uppercase">Pendidik</p>
+				<p class="mt-0.5 text-2xl font-semibold text-gray-900">{stats.resultCounts.pendidik}</p>
 			</div>
 		</div>
-		<div class="stat-card">
-			<div class="stat-icon">🌿</div>
-			<div class="stat-content">
-				<p class="stat-label">Pelestari</p>
-				<p class="stat-value">{stats.resultCounts.pelestari}</p>
+		<div class="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4">
+			<div
+				class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-2xl"
+			>
+				🌿
+			</div>
+			<div class="min-w-0">
+				<p class="text-xs font-medium tracking-wide text-gray-500 uppercase">Pelestari</p>
+				<p class="mt-0.5 text-2xl font-semibold text-gray-900">{stats.resultCounts.pelestari}</p>
 			</div>
 		</div>
 	</div>
 
+	<!-- Table -->
 	{#if submissions.length === 0}
-		<div class="empty-state">
-			<p>Belum ada data kuis yang tersimpan.</p>
+		<div class="rounded-lg border border-gray-200 bg-white p-12 text-center">
+			<p class="text-gray-500">Belum ada data kuis yang tersimpan.</p>
 		</div>
 	{:else}
-		<div class="table-container">
-			<table class="rekap-table">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>Nama</th>
-						<th>Nomor HP</th>
-						<th>Hasil</th>
-						<th>Jawaban A</th>
-						<th>Jawaban B</th>
-						<th>Jawaban C</th>
-						<th>Jawaban D</th>
-						<th>Waktu Submit</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each submissions as submission, index}
+		<div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
+			<div class="overflow-x-auto">
+				<table class="w-full">
+					<thead class="border-b border-gray-200 bg-gray-50">
 						<tr>
-							<td>{index + 1}</td>
-							<td class="name-cell">{submission.biodata.nama}</td>
-							<td>{submission.biodata.nomorHP}</td>
-							<td class="result-cell">
-								<span class="result-badge result-{submission.result.type}">
-									{getResultLabel(submission.result.type)}
-								</span>
-							</td>
-							<td class="count-cell">{submission.result.counts.a}</td>
-							<td class="count-cell">{submission.result.counts.b}</td>
-							<td class="count-cell">{submission.result.counts.c}</td>
-							<td class="count-cell">{submission.result.counts.d}</td>
-							<td class="date-cell">{formatDate(submission.submittedAt)}</td>
+							<th
+								class="px-4 py-3.5 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>No</th
+							>
+							<th
+								class="px-4 py-3.5 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Nama</th
+							>
+							<th
+								class="px-4 py-3.5 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Nomor HP</th
+							>
+							<th
+								class="px-4 py-3.5 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Universitas</th
+							>
+							<th
+								class="px-4 py-3.5 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Hasil</th
+							>
+							<th
+								class="px-4 py-3.5 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Jawaban A</th
+							>
+							<th
+								class="px-4 py-3.5 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Jawaban B</th
+							>
+							<th
+								class="px-4 py-3.5 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Jawaban C</th
+							>
+							<th
+								class="px-4 py-3.5 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Jawaban D</th
+							>
+							<th
+								class="px-4 py-3.5 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+								>Waktu Submit</th
+							>
 						</tr>
-					{/each}
-				</tbody>
-			</table>
+					</thead>
+					<tbody class="divide-y divide-gray-200">
+						{#each submissions as submission, index}
+							<tr class="transition-colors hover:bg-gray-50">
+								<td class="px-4 py-3.5 text-sm text-gray-600">{index + 1}</td>
+								<td class="px-4 py-3.5 text-sm font-medium text-gray-900">
+									{submission.biodata.nama}
+								</td>
+								<td class="px-4 py-3.5 text-sm text-gray-600">{submission.biodata.nomorHP}</td>
+								<td class="px-4 py-3.5 text-sm text-gray-600">
+									<div class="max-w-xs">
+										<div class="font-medium text-gray-900">{submission.biodata.universitas}</div>
+										{#if submission.biodata.provinsi}
+											<div class="mt-0.5 text-xs text-gray-500">{submission.biodata.provinsi}</div>
+										{/if}
+									</div>
+								</td>
+								<td class="px-4 py-3.5 text-center">
+									<span
+										class="inline-block rounded bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700"
+									>
+										{getResultLabel(submission.result.type)}
+									</span>
+								</td>
+								<td class="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+									{submission.result.counts.a}
+								</td>
+								<td class="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+									{submission.result.counts.b}
+								</td>
+								<td class="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+									{submission.result.counts.c}
+								</td>
+								<td class="px-4 py-3.5 text-center text-sm font-semibold text-gray-900">
+									{submission.result.counts.d}
+								</td>
+								<td class="px-4 py-3.5 text-sm whitespace-nowrap text-gray-500">
+									{formatDate(submission.submittedAt)}
+								</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	{/if}
 </div>
-
-<style>
-	.rekap-container {
-		max-width: 1400px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
-
-	.rekap-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 2rem;
-		flex-wrap: wrap;
-		gap: 1rem;
-	}
-
-	h2 {
-		color: #212529;
-		margin: 0;
-		font-size: 1.5rem;
-		font-weight: 600;
-	}
-
-	.btn-download {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.625rem 1.25rem;
-		background: #212529;
-		color: white;
-		border: none;
-		border-radius: 6px;
-		font-size: 0.9rem;
-		font-weight: 500;
-		cursor: pointer;
-		transition: background 0.2s;
-	}
-
-	.btn-download:hover {
-		background: #343a40;
-	}
-
-	.stats-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 0.75rem;
-		margin-bottom: 2rem;
-	}
-
-	.stat-card {
-		background: white;
-		padding: 1.25rem;
-		border-radius: 6px;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-		border: 1px solid #e9ecef;
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-	}
-
-	.stat-icon {
-		font-size: 1.75rem;
-		width: 50px;
-		height: 50px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: #f8f9fa;
-		border-radius: 8px;
-	}
-
-	.stat-content {
-		flex: 1;
-	}
-
-	.stat-label {
-		margin: 0;
-		color: #6c757d;
-		font-size: 0.8rem;
-		font-weight: 500;
-	}
-
-	.stat-value {
-		margin: 0.25rem 0 0 0;
-		color: #212529;
-		font-size: 1.5rem;
-		font-weight: 600;
-	}
-
-	.empty-state {
-		background: white;
-		padding: 3rem;
-		border-radius: 6px;
-		text-align: center;
-		color: #6c757d;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-		border: 1px solid #e9ecef;
-	}
-
-	.table-container {
-		background: white;
-		border-radius: 6px;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-		border: 1px solid #e9ecef;
-		overflow: hidden;
-	}
-
-	.rekap-table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-
-	.rekap-table thead {
-		background: #f8f9fa;
-	}
-
-	.rekap-table th {
-		padding: 0.875rem 1rem;
-		text-align: left;
-		font-weight: 600;
-		color: #495057;
-		border-bottom: 1px solid #dee2e6;
-		white-space: nowrap;
-		font-size: 0.85rem;
-		text-transform: uppercase;
-		letter-spacing: 0.3px;
-	}
-
-	.rekap-table td {
-		padding: 0.875rem 1rem;
-		border-bottom: 1px solid #f1f3f5;
-		color: #495057;
-		font-size: 0.9rem;
-	}
-
-	.rekap-table tbody tr:hover {
-		background: #f8f9fa;
-	}
-
-	.rekap-table tbody tr:last-child td {
-		border-bottom: none;
-	}
-
-	.name-cell {
-		font-weight: 500;
-		color: #212529;
-	}
-
-	.result-cell {
-		text-align: center;
-	}
-
-	.result-badge {
-		display: inline-block;
-		padding: 0.375rem 0.75rem;
-		border-radius: 4px;
-		font-weight: 500;
-		font-size: 0.8rem;
-		white-space: nowrap;
-	}
-
-	.result-inovator {
-		background: #e9ecef;
-		color: #495057;
-	}
-
-	.result-kreator {
-		background: #e9ecef;
-		color: #495057;
-	}
-
-	.result-pendidik {
-		background: #e9ecef;
-		color: #495057;
-	}
-
-	.result-pelestari {
-		background: #e9ecef;
-		color: #495057;
-	}
-
-	.count-cell {
-		text-align: center;
-		font-weight: 600;
-		color: #212529;
-		font-size: 0.9rem;
-	}
-
-	.date-cell {
-		white-space: nowrap;
-		font-size: 0.85rem;
-		color: #6c757d;
-	}
-
-	@media (max-width: 1200px) {
-		.table-container {
-			overflow-x: auto;
-		}
-
-		.rekap-table {
-			min-width: 900px;
-		}
-	}
-
-	@media (max-width: 768px) {
-		.rekap-container {
-			padding: 1rem;
-		}
-
-		h2 {
-			font-size: 1.5rem;
-		}
-
-		.stats-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

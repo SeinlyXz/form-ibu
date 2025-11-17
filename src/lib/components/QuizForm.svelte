@@ -63,189 +63,68 @@
 	}
 </script>
 
-<div class="quiz-form">
-	<div class="progress-bar">
-		<div class="progress-fill" style="width: {progress}%"></div>
-	</div>
+<div class="mx-auto max-w-3xl">
+	<div class="rounded-lg border border-gray-200 bg-white p-8 shadow-sm md:p-10">
+		<!-- Progress Bar -->
+		<div class="mb-8 h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
+			<div
+				class="h-full bg-gray-900 transition-all duration-300 ease-out"
+				style="width: {progress}%"
+			></div>
+		</div>
 
-	<div class="quiz-header">
-		<h2>Pertanyaan {currentQuestion.no} dari {questions.length}</h2>
-		<p class="question-text">{currentQuestion.pertanyaan}</p>
-	</div>
+		<!-- Question Header -->
+		<div class="mb-8">
+			<p class="mb-3 text-xs font-semibold tracking-wider text-gray-500 uppercase">
+				Pertanyaan {currentQuestion.no} dari {questions.length}
+			</p>
+			<h2 class="text-xl leading-relaxed font-medium text-gray-900 md:text-2xl">
+				{currentQuestion.pertanyaan}
+			</h2>
+		</div>
 
-	<div class="options">
-		{#each Object.entries(currentQuestion.pilihan) as [key, value]}
+		<!-- Options -->
+		<div class="mb-6 space-y-3">
+			{#each Object.entries(currentQuestion.pilihan) as [key, value]}
+				<button
+					onclick={() => selectAnswer(key as 'a' | 'b' | 'c' | 'd')}
+					class="flex w-full items-center gap-4 rounded-lg border px-5 py-4 text-left transition-all {getCurrentAnswer() ===
+					key
+						? 'border-gray-900 bg-gray-900 text-white'
+						: 'border-gray-300 bg-white text-gray-900 hover:border-gray-700 hover:bg-gray-50'}"
+				>
+					<span
+						class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold {getCurrentAnswer() ===
+						key
+							? 'bg-white text-gray-900'
+							: 'bg-gray-100 text-gray-600'}"
+					>
+						{key.toUpperCase()}
+					</span>
+					<span class="text-[15px] leading-relaxed">{value}</span>
+				</button>
+			{/each}
+		</div>
+
+		<!-- Error Message -->
+		{#if error}
+			<p class="mb-4 text-center text-sm font-medium text-red-600">{error}</p>
+		{/if}
+
+		<!-- Navigation -->
+		<div class="flex gap-3">
 			<button
-				class="option-btn"
-				class:selected={getCurrentAnswer() === key}
-				onclick={() => selectAnswer(key as 'a' | 'b' | 'c' | 'd')}
+				onclick={handlePrevious}
+				class="flex-1 rounded-md border border-gray-300 bg-white px-4 py-3 font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
 			>
-				<span class="option-label">{key.toUpperCase()}</span>
-				<span class="option-text">{value}</span>
+				{currentQuestionIndex === 0 ? 'Kembali ke Biodata' : 'Sebelumnya'}
 			</button>
-		{/each}
-	</div>
-
-	{#if error}
-		<p class="error-message">{error}</p>
-	{/if}
-
-	<div class="navigation">
-		<button class="btn-secondary" onclick={handlePrevious}>
-			{currentQuestionIndex === 0 ? 'Kembali ke Biodata' : 'Sebelumnya'}
-		</button>
-		<button class="btn-primary" onclick={handleNext}>
-			{isLastQuestion ? 'Selesai' : 'Selanjutnya'}
-		</button>
+			<button
+				onclick={handleNext}
+				class="flex-1 rounded-md bg-gray-900 px-4 py-3 font-medium text-white transition-colors hover:bg-gray-800"
+			>
+				{isLastQuestion ? 'Selesai' : 'Selanjutnya'}
+			</button>
+		</div>
 	</div>
 </div>
-
-<style>
-	.quiz-form {
-		max-width: 700px;
-		margin: 0 auto;
-		padding: 2.5rem;
-		background: white;
-		border-radius: 8px;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-		border: 1px solid #e9ecef;
-	}
-
-	.progress-bar {
-		width: 100%;
-		height: 6px;
-		background: #e9ecef;
-		border-radius: 3px;
-		margin-bottom: 2rem;
-		overflow: hidden;
-	}
-
-	.progress-fill {
-		height: 100%;
-		background: #212529;
-		transition: width 0.3s ease;
-	}
-
-	.quiz-header {
-		margin-bottom: 2rem;
-	}
-
-	h2 {
-		color: #6c757d;
-		margin-bottom: 1rem;
-		font-size: 0.9rem;
-		font-weight: 500;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
-	.question-text {
-		font-size: 1.25rem;
-		color: #212529;
-		font-weight: 500;
-		line-height: 1.6;
-	}
-
-	.options {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.option-btn {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		padding: 1rem 1.25rem;
-		background: #fff;
-		border: 1px solid #dee2e6;
-		border-radius: 6px;
-		cursor: pointer;
-		transition: all 0.2s;
-		text-align: left;
-	}
-
-	.option-btn:hover {
-		border-color: #495057;
-		background: #f8f9fa;
-	}
-
-	.option-btn.selected {
-		background: #212529;
-		border-color: #212529;
-		color: white;
-	}
-
-	.option-label {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 36px;
-		height: 36px;
-		background: #f8f9fa;
-		border-radius: 50%;
-		font-weight: 600;
-		color: #495057;
-		flex-shrink: 0;
-		font-size: 0.875rem;
-	}
-
-	.option-btn.selected .option-label {
-		background: white;
-		color: #212529;
-	}
-
-	.option-text {
-		flex: 1;
-		font-size: 0.95rem;
-		line-height: 1.5;
-		color: inherit;
-	}
-
-	.error-message {
-		color: #dc3545;
-		text-align: center;
-		margin-bottom: 1rem;
-		font-weight: 500;
-		font-size: 0.9rem;
-	}
-
-	.navigation {
-		display: flex;
-		gap: 0.75rem;
-		justify-content: space-between;
-	}
-
-	.btn-primary,
-	.btn-secondary {
-		flex: 1;
-		padding: 0.875rem;
-		border: none;
-		border-radius: 6px;
-		font-size: 0.95rem;
-		font-weight: 500;
-		cursor: pointer;
-		transition: all 0.2s;
-	}
-
-	.btn-primary {
-		background: #212529;
-		color: white;
-	}
-
-	.btn-primary:hover {
-		background: #343a40;
-	}
-
-	.btn-secondary {
-		background: #fff;
-		color: #495057;
-		border: 1px solid #ced4da;
-	}
-
-	.btn-secondary:hover {
-		background: #f8f9fa;
-		border-color: #adb5bd;
-	}
-</style>

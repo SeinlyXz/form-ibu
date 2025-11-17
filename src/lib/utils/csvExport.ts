@@ -6,6 +6,8 @@ export function generateCSV(submissions: QuizSubmission[]): string {
     'No',
     'Nama',
     'Nomor HP',
+    'Universitas',
+    'Provinsi',
     'Hasil',
     'Jawaban A',
     'Jawaban B',
@@ -27,6 +29,8 @@ export function generateCSV(submissions: QuizSubmission[]): string {
       index + 1,
       `"${submission.biodata.nama}"`, // Wrap in quotes to handle commas in names
       submission.biodata.nomorHP,
+      `"${submission.biodata.universitas}"`,
+      `"${submission.biodata.provinsi || '-'}"`,
       resultLabels[submission.result.type],
       submission.result.counts.a,
       submission.result.counts.b,

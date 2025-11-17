@@ -14,7 +14,7 @@
 				return {
 					title: 'INOVATOR',
 					description:
-						'Kamu adalah seorang inovator! Kamu memiliki kemampuan luar biasa dalam menemukan solusi baru dan menciptakan ide-ide kreatif untuk memecahkan masalah.',
+						'Anda adalah seorang inovator! Anda memiliki kemampuan luar biasa dalam menemukan solusi baru dan menciptakan ide-ide kreatif untuk memecahkan masalah.',
 					icon: '💡',
 					color: '#495057'
 				};
@@ -22,7 +22,7 @@
 				return {
 					title: 'KREATOR',
 					description:
-						'Kamu adalah seorang kreator! Kamu memiliki bakat dalam menciptakan karya yang estetik dan menarik. Desain, seni, dan konten kreatif adalah duniamu.',
+						'Anda adalah seorang kreator! Anda memiliki bakat dalam menciptakan karya yang estetik dan menarik. Desain, seni, dan konten kreatif adalah duniamu.',
 					icon: '🎨',
 					color: '#495057'
 				};
@@ -30,7 +30,7 @@
 				return {
 					title: 'PENDIDIK',
 					description:
-						'Kamu adalah seorang pendidik! Kamu senang berbagi pengetahuan dan membantu orang lain tumbuh. Kemampuanmu dalam mengajar dan menginspirasi adalah kekuatan terbesarmu.',
+						'Anda adalah seorang pendidik! Anda senang berbagi pengetahuan dan membantu orang lain tumbuh. Kemampuanmu dalam mengajar dan menginspirasi adalah kekuatan terbesarmu.',
 					icon: '📚',
 					color: '#495057'
 				};
@@ -38,7 +38,7 @@
 				return {
 					title: 'PELESTARI',
 					description:
-						'Kamu adalah seorang pelestari! Kamu memiliki kepedulian tinggi terhadap budaya dan nilai-nilai lokal. Kamu mampu menjaga tradisi sambil tetap relevan di era modern.',
+						'Anda adalah seorang pelestari! Anda memiliki kepedulian tinggi terhadap budaya dan nilai-nilai lokal. Anda mampu menjaga tradisi sambil tetap relevan di era modern.',
 					icon: '🌿',
 					color: '#495057'
 				};
@@ -46,160 +46,75 @@
 	});
 </script>
 
-<div class="result-display">
-	<div class="result-card">
-		<div class="result-icon">{resultInfo.icon}</div>
-		<h2>{resultInfo.title}</h2>
-		<p class="result-description">{resultInfo.description}</p>
+<div class="mx-auto max-w-2xl px-4">
+	<div class="rounded-lg border border-gray-200 bg-white p-8 text-center shadow-sm md:p-10">
+		<!-- Icon -->
+		<div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+			<span class="text-4xl">{resultInfo.icon}</span>
+		</div>
 
-		<div class="score-breakdown">
-			<h3>Rincian Jawaban</h3>
-			<div class="scores">
-				<div class="score-item">
-					<span class="score-label">Pilihan A (Inovator)</span>
-					<span class="score-value">{result.result.counts.a}</span>
+		<!-- Congratulations -->
+		<p class="mb-2 text-xs font-semibold tracking-[0.15em] text-gray-500 uppercase">Selamat</p>
+
+		<!-- Title -->
+		<h2 class="mb-4 text-2xl font-semibold text-gray-900 md:text-3xl">{resultInfo.title}</h2>
+
+		<!-- Description -->
+		<p class="mb-8 text-base leading-relaxed text-gray-600">
+			{resultInfo.description}
+		</p>
+
+		<!-- Score Breakdown -->
+		<div class="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 text-left">
+			<h3 class="mb-4 text-xs font-semibold tracking-wider text-gray-500 uppercase">
+				Rincian Jawaban
+			</h3>
+			<div class="space-y-2">
+				<div
+					class="flex items-center justify-between rounded-md border border-gray-200 bg-white px-4 py-3"
+				>
+					<span class="text-sm text-gray-600">Pilihan A (Inovator)</span>
+					<span class="text-lg font-semibold text-gray-900">{result.result.counts.a}</span>
 				</div>
-				<div class="score-item">
-					<span class="score-label">Pilihan B (Kreator)</span>
-					<span class="score-value">{result.result.counts.b}</span>
+				<div
+					class="flex items-center justify-between rounded-md border border-gray-200 bg-white px-4 py-3"
+				>
+					<span class="text-sm text-gray-600">Pilihan B (Kreator)</span>
+					<span class="text-lg font-semibold text-gray-900">{result.result.counts.b}</span>
 				</div>
-				<div class="score-item">
-					<span class="score-label">Pilihan C (Pendidik)</span>
-					<span class="score-value">{result.result.counts.c}</span>
+				<div
+					class="flex items-center justify-between rounded-md border border-gray-200 bg-white px-4 py-3"
+				>
+					<span class="text-sm text-gray-600">Pilihan C (Pendidik)</span>
+					<span class="text-lg font-semibold text-gray-900">{result.result.counts.c}</span>
 				</div>
-				<div class="score-item">
-					<span class="score-label">Pilihan D (Pelestari)</span>
-					<span class="score-value">{result.result.counts.d}</span>
+				<div
+					class="flex items-center justify-between rounded-md border border-gray-200 bg-white px-4 py-3"
+				>
+					<span class="text-sm text-gray-600">Pilihan D (Pelestari)</span>
+					<span class="text-lg font-semibold text-gray-900">{result.result.counts.d}</span>
 				</div>
 			</div>
 		</div>
 
-		<div class="user-info">
-			<p><strong>Nama:</strong> {result.biodata.nama}</p>
-			<p><strong>Nomor HP:</strong> {result.biodata.nomorHP}</p>
+		<!-- User Info -->
+		<div class="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 text-left">
+			<p class="mb-1 text-sm text-gray-600">
+				<span class="font-medium">Nama:</span>
+				{result.biodata.nama}
+			</p>
+			<p class="text-sm text-gray-600">
+				<span class="font-medium">Nomor HP:</span>
+				{result.biodata.nomorHP}
+			</p>
 		</div>
 
-		<button class="btn-restart" onclick={onRestart}>Mulai Kuis Baru</button>
+		<!-- Restart Button -->
+		<button
+			onclick={onRestart}
+			class="w-full rounded-md bg-gray-900 px-4 py-3 font-medium text-white transition-colors hover:bg-gray-800"
+		>
+			Mulai Kuis Baru
+		</button>
 	</div>
 </div>
-
-<style>
-	.result-display {
-		max-width: 600px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
-
-	.result-card {
-		background: white;
-		border-radius: 8px;
-		padding: 2.5rem 2rem;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-		border: 1px solid #e9ecef;
-		text-align: center;
-	}
-
-	.result-icon {
-		width: 80px;
-		height: 80px;
-		margin: 0 auto 1.5rem;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 2.5rem;
-		color: white;
-		background: #f8f9fa;
-	}
-
-	h2 {
-		font-size: 1.75rem;
-		margin-bottom: 1rem;
-		font-weight: 600;
-		color: #212529;
-	}
-
-	.result-description {
-		font-size: 1rem;
-		line-height: 1.6;
-		color: #6c757d;
-		margin-bottom: 2rem;
-	}
-
-	.score-breakdown {
-		background: #f8f9fa;
-		border-radius: 6px;
-		padding: 1.5rem;
-		margin-bottom: 1.5rem;
-		text-align: left;
-		border: 1px solid #e9ecef;
-	}
-
-	.score-breakdown h3 {
-		font-size: 0.9rem;
-		margin-bottom: 1rem;
-		color: #495057;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
-	.scores {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	.score-item {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0.75rem;
-		background: white;
-		border-radius: 4px;
-		border: 1px solid #e9ecef;
-	}
-
-	.score-label {
-		color: #495057;
-		font-size: 0.9rem;
-	}
-
-	.score-value {
-		font-weight: 600;
-		color: #212529;
-		font-size: 1.125rem;
-	}
-
-	.user-info {
-		background: #f8f9fa;
-		border-radius: 6px;
-		padding: 1rem;
-		margin-bottom: 1.5rem;
-		text-align: left;
-		border: 1px solid #e9ecef;
-	}
-
-	.user-info p {
-		margin: 0.5rem 0;
-		color: #495057;
-		font-size: 0.9rem;
-	}
-
-	.btn-restart {
-		width: 100%;
-		padding: 0.875rem;
-		background: #212529;
-		color: white;
-		border: none;
-		border-radius: 6px;
-		font-size: 0.95rem;
-		font-weight: 500;
-		cursor: pointer;
-		transition: background 0.2s;
-	}
-
-	.btn-restart:hover {
-		background: #343a40;
-	}
-</style>

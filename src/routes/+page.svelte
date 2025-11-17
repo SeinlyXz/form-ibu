@@ -9,7 +9,7 @@
 	type Step = 'biodata' | 'quiz' | 'result';
 
 	let currentStep = $state<Step>('biodata');
-	let biodata = $state<BiodataType>({ nama: '', nomorHP: '' });
+	let biodata = $state<BiodataType>({ nama: '', nomorHP: '', universitas: '' });
 	let answers = $state<QuizAnswer[]>([]);
 	let quizResult = $state<QuizSubmission | null>(null);
 	let isSubmitting = $state(false);
@@ -54,7 +54,7 @@
 
 	function handleRestart() {
 		currentStep = 'biodata';
-		biodata = { nama: '', nomorHP: '' };
+		biodata = { nama: '', nomorHP: '', universitas: '' };
 		answers = [];
 		quizResult = null;
 		submitError = '';
@@ -77,175 +77,60 @@
 	/>
 </svelte:head>
 
-<div class="app-container">
-	<header class="app-header">
-		<h1 class="app-title">🪞 Cermin Karsa</h1>
-		<p class="app-subtitle">Temukan potensi wirausahamu</p>
+<div class="flex min-h-screen flex-col bg-gray-50">
+	<header class="border-b border-gray-200 bg-white">
+		<div class="mx-auto max-w-4xl px-4 py-12 text-center">
+			<h1 class="mb-2 text-3xl font-semibold text-gray-900 md:text-4xl">🪞 Cermin Karsa</h1>
+			<p class="text-base text-gray-600">Temukan potensi wirausahamu</p>
+		</div>
 	</header>
 
-	<main class="app-main">
-		{#if currentStep === 'biodata'}
-			<BiodataForm bind:biodata onNext={goToQuiz} />
-		{:else if currentStep === 'quiz'}
-			<QuizForm
-				questions={quizQuestions}
-				bind:answers
-				onComplete={handleQuizComplete}
-				onBack={goToBiodata}
-			/>
-		{:else if currentStep === 'result' && quizResult}
-			<ResultDisplay result={quizResult} onRestart={handleRestart} />
-		{/if}
+	<main class="relative flex-1 px-4 py-8">
+		<div class="mx-auto max-w-4xl">
+			{#if currentStep === 'biodata'}
+				<BiodataForm bind:biodata onNext={goToQuiz} />
+			{:else if currentStep === 'quiz'}
+				<QuizForm
+					questions={quizQuestions}
+					bind:answers
+					onComplete={handleQuizComplete}
+					onBack={goToBiodata}
+				/>
+			{:else if currentStep === 'result' && quizResult}
+				<ResultDisplay result={quizResult} onRestart={handleRestart} />
+			{/if}
+		</div>
 
 		{#if isSubmitting}
-			<div class="loading-overlay">
-				<div class="loading-spinner"></div>
-				<p>Menyimpan hasil kuis...</p>
+			<div
+				class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/95 backdrop-blur-sm"
+			>
+				<div
+					class="mb-4 h-12 w-12 animate-spin rounded-full border-3 border-gray-200 border-t-gray-700"
+				></div>
+				<p class="text-gray-700">Menyimpan hasil kuis...</p>
 			</div>
 		{/if}
 
 		{#if submitError}
-			<div class="error-banner">
-				{submitError}
-				<button onclick={() => (submitError = '')}>×</button>
+			<div
+				class="fixed top-5 left-1/2 z-50 flex max-w-[90%] -translate-x-1/2 items-center gap-4 rounded-lg border border-red-600 bg-white px-8 py-4 text-red-600 shadow-lg"
+			>
+				<span>{submitError}</span>
+				<button
+					onclick={() => (submitError = '')}
+					class="flex h-8 w-8 items-center justify-center rounded text-2xl text-red-600 transition-colors hover:bg-red-50"
+					>×</button
+				>
 			</div>
 		{/if}
 	</main>
 
-	<footer class="app-footer">
-		<p>© 2025 Cermin Karsa. Game untuk mengenali potensi wirausahamu.</p>
+	<footer class="border-t border-gray-200 bg-white">
+		<div class="mx-auto max-w-4xl px-4 py-6 text-center">
+			<p class="text-sm text-gray-600">
+				© 2025 Cermin Karsa. Game untuk mengenali potensi wirausahamu.
+			</p>
+		</div>
 	</footer>
 </div>
-
-<style>
-	:global(body) {
-		margin: 0;
-		padding: 0;
-		font-family:
-			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-		background: #f8f9fa;
-		min-height: 100vh;
-	}
-
-	.app-container {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.app-header {
-		text-align: center;
-		padding: 3rem 1rem 2rem;
-		background: white;
-		border-bottom: 1px solid #e9ecef;
-	}
-
-	.app-title {
-		font-size: 2rem;
-		margin: 0 0 0.5rem 0;
-		font-weight: 600;
-		color: #212529;
-	}
-
-	.app-subtitle {
-		font-size: 1rem;
-		margin: 0;
-		color: #6c757d;
-		font-weight: 400;
-	}
-
-	.app-main {
-		flex: 1;
-		padding: 2rem 1rem;
-		position: relative;
-	}
-
-	.app-footer {
-		text-align: center;
-		padding: 1.5rem;
-		color: #6c757d;
-		font-size: 0.875rem;
-		background: white;
-		border-top: 1px solid #e9ecef;
-	}
-
-	.loading-overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: rgba(255, 255, 255, 0.95);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		color: #495057;
-		z-index: 1000;
-		backdrop-filter: blur(4px);
-	}
-
-	.loading-spinner {
-		width: 50px;
-		height: 50px;
-		border: 3px solid #e9ecef;
-		border-top-color: #495057;
-		border-radius: 50%;
-		animation: spin 1s linear infinite;
-		margin-bottom: 1rem;
-	}
-
-	@keyframes spin {
-		to {
-			transform: rotate(360deg);
-		}
-	}
-
-	.error-banner {
-		position: fixed;
-		top: 20px;
-		left: 50%;
-		transform: translateX(-50%);
-		background: white;
-		color: #dc3545;
-		padding: 1rem 2rem;
-		border-radius: 8px;
-		border: 1px solid #dc3545;
-		box-shadow: 0 2px 12px rgba(220, 53, 69, 0.15);
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		z-index: 1001;
-		max-width: 90%;
-	}
-
-	.error-banner button {
-		background: none;
-		border: none;
-		color: #dc3545;
-		font-size: 1.5rem;
-		cursor: pointer;
-		padding: 0;
-		width: 30px;
-		height: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 4px;
-		transition: background 0.3s;
-	}
-
-	.error-banner button:hover {
-		background: #f8d7da;
-	}
-
-	@media (max-width: 768px) {
-		.app-title {
-			font-size: 2rem;
-		}
-
-		.app-subtitle {
-			font-size: 1rem;
-		}
-	}
-</style>

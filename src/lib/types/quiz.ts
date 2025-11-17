@@ -1,6 +1,23 @@
 export interface BiodataForm {
   nama: string;
   nomorHP: string;
+  universitas: string;
+  provinsi?: string;
+}
+
+export interface PerguruanTinggi {
+  nama: string;
+  provinsi: string;
+}
+
+export interface PerguruanTinggiResponse {
+  data: PerguruanTinggi[];
+  pagination: {
+    total: number;
+    halaman: number;
+    perHalaman: number;
+    totalHalaman: number;
+  };
 }
 
 export interface QuizQuestion {
