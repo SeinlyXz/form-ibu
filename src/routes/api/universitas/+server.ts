@@ -40,7 +40,7 @@ export const GET: RequestHandler = async ({ url }) => {
 			}
 		`;
 
-    const response = await fetch('http://localhost:3000/graphql', {
+    const response = await fetch('http://localhost:3002/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
